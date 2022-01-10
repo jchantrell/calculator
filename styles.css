@@ -1,0 +1,49 @@
+html, body {
+    background: lightcoral;
+    height: 100vh;
+    margin: 20%;
+}
+ 
+.button, .input, .calculator-row, .calculator, .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    flex-direction: column;
+    background: darkcyan;
+}
+
+.calculator {
+    background: white;
+    height: 600px;
+    width: 400px;
+    flex-direction: column;
+}
+
+.calculator-row {
+    background: greenyellow;
+    gap: 2px;
+    height: 20%;
+    width: 100%;
+}
+
+.input {
+    background: grey;
+    width: 100%;
+    height: 100%;
+}
+
+.clear {
+    background: lightblue;
+    width: 30%;
+}
+
+.button {
+    background: black;
+    height: 95%;
+    width: 24%;
+    color: white;
+    font-size: 36px;
+}
