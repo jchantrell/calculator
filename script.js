@@ -1,5 +1,7 @@
 function operate(operator, a, b)
 
+function equals();
+
 function add(a, b);
 
 function subtract(a, b);
@@ -12,3 +14,4 @@ function displayInput();
 
 function clearInput();
 
+function input()
