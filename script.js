@@ -1,17 +1,88 @@
-function operate(operator, a, b)
+const input = document.querySelector('.input');
+const output = document.querySelectorAll('.output');
+const clear = document.querySelectorAll('.clear');
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(buttonValue => buttonValue.addEventListener('click', event => {
+    clickButton(event.target.getAttribute("data-input"));
+}));
 
-function equals();
+function clickButton(buttonValue){
+    const containsNumber = /\d/;
+    if (containsNumber.test(buttonValue)){   
+        inputValue = inputValue += buttonValue;
+        input.textContent = inputValue; 
+    }
+    if (buttonValue == "."){
+        input.textContent = inputValue += ".";
+    }
+    if (buttonValue == "clear"){
+        clearInput()
+    }
+    if (buttonValue == "+"){
+        add()
+    }
+    if (buttonValue == "-"){
+        substract()
+    }
+    if (buttonValue == "*"){
+        multiply()
+    }
+    if (buttonValue == "/"){
+        divide()
+    }
+    if (buttonValue == "="){
+        equals()
+    }
+}
 
-function add(a, b);
+let memory1 = 0;
+let memory2 = 0;
+let inputValue = ""
+let outputValue = ""
 
-function subtract(a, b);
+function operate(operator, num1, num2){
+    if (operator == "+"){
+        add(num1, num2)
+    }
+    if (operator == "-"){
+        subtract(num1, num2)
+    }
+    if (operator == "*"){
+        multiply(num1, num2)
+    }
+    if (operator == "/"){
+        divide(num1, num2)
+    }
+}
 
-function multiply(a, b);
+function equals(num1, num2){
 
-function divide(a, b);
+}
 
-function displayInput();
+function add(num1, num2){
+    input.textContent = `${inputValue} +`
+    let sum = num1 + num2;
+    console.log(sum)
+}
 
-function clearInput();
+function subtract(num1, num2){
+    sum = num1 - num2;
+    console.log(sum)
+}
 
-function input()
+function multiply(num1, num2){
+    sum = num1 * num2;
+    console.log(sum)
+}
+
+function divide(num1, num2){
+    sum = num1 / num2;
+    console.log(sum)
+}
+
+function clearInput(){
+    input.textContent = ""
+    inputValue = ""
+}
+
+
