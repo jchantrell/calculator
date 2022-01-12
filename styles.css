@@ -6,7 +6,7 @@ html, body {
     font-size: 36px;
 }
  
-.button, .input, .calculator-row, .calculator, .container, .clear {
+.button, .button-row, .input, .input-row, .output, .output-row, .calculator, .container, .clear {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,14 +23,21 @@ html, body {
     flex-direction: column;
 }
 
-.calculator-row {
+.button-row {
     background: grey;
     gap: 2px;
     height: 20%;
     width: 100%;
 }
 
-.input {
+.input-row {
+    background: grey;
+    gap: 2px;
+    height: 10%;
+    width: 100%;
+}
+
+.input, .output {
     background: grey;
     width: 100%;
     height: 100%;
@@ -40,7 +47,6 @@ html, body {
 
 .clear {
     margin-left: 10px;
-    background: darkgrey;
 }
 
 .button {
