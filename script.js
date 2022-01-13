@@ -1,88 +1,103 @@
+let userInput = "";
+let storedInput = "";
+let outputValue = "";
+const storedInputText = document.querySelector('.stored-input')
+const inputRow = document.querySelector('.input-row')
 const input = document.querySelector('.input');
-const output = document.querySelectorAll('.output');
-const clear = document.querySelectorAll('.clear');
+const output = document.querySelector('.output');
+const operator = document.querySelector('.operator');
+const backspace = document.querySelector('.backspace');
+const clear = document.querySelector('.clear');
 const buttons = document.querySelectorAll('.button');
 buttons.forEach(buttonValue => buttonValue.addEventListener('click', event => {
     clickButton(event.target.getAttribute("data-input"));
 }));
 
 function clickButton(buttonValue){
-    const containsNumber = /\d/;
-    if (containsNumber.test(buttonValue)){   
-        inputValue = inputValue += buttonValue;
-        input.textContent = inputValue; 
-    }
-    if (buttonValue == "."){
-        input.textContent = inputValue += ".";
-    }
     if (buttonValue == "clear"){
-        clearInput()
+        clearScreen("all")
     }
-    if (buttonValue == "+"){
-        add()
+    else if (buttonValue == "backspace"){
+        removeLastLetter = userInput.slice(0, -1);
+        userInput = removeLastLetter;
     }
-    if (buttonValue == "-"){
-        substract()
-    }
-    if (buttonValue == "*"){
-        multiply()
-    }
-    if (buttonValue == "/"){
-        divide()
-    }
-    if (buttonValue == "="){
-        equals()
-    }
-}
+    else if (buttonValue == "+"){
+        if (storedInput != 0){
+            sum = add(parseInt(userInput), parseInt(storedInput))
+            input.textContent = "0"
+            userInput = "0"
+            storedInputText.textContent = ""
+            storedInput = "0"
+            operator.textContent = ""
+            return sum;
 
-let memory1 = 0;
-let memory2 = 0;
-let inputValue = ""
-let outputValue = ""
+        }
+        if (userInput != 0){
+            storedInput = userInput;
+            operator.textContent = buttonValue;
+            storedInputText.textContent = userInput;
+            userInput = 0;
+        }
+    }
+    else if (buttonValue == "-"){
+        storedInput = userInput;
+        operator.textContent = buttonValue;
+        operate("-")
+    }
+    else if (buttonValue == "*"){
+        storedInput = userInput;
+        operator.textContent = buttonValue;
+        operate("*")
+    }
+    else if (buttonValue == "/"){
+        storedInput = userInput;
+        operator.textContent = buttonValue;
+        operate("/")
+    }
+    else if (userInput == 0){
+        userInput = buttonValue;
+        input.textContent = userInput;
+    }
+    else
+        userInput = userInput += buttonValue;
+        input.textContent = userInput;
+};
 
-function operate(operator, num1, num2){
-    if (operator == "+"){
-        add(num1, num2)
-    }
-    if (operator == "-"){
-        subtract(num1, num2)
-    }
-    if (operator == "*"){
-        multiply(num1, num2)
-    }
-    if (operator == "/"){
-        divide(num1, num2)
-    }
-}
+function operate(operator){
 
-function equals(num1, num2){
-
-}
+};
 
 function add(num1, num2){
-    input.textContent = `${inputValue} +`
-    let sum = num1 + num2;
-    console.log(sum)
-}
+    sum = num1 + num2;
+    output.textContent = `${userInput} + ${storedInput} = ${sum}`
+};
 
-function subtract(num1, num2){
-    sum = num1 - num2;
-    console.log(sum)
-}
+function subtract(){
 
-function multiply(num1, num2){
-    sum = num1 * num2;
-    console.log(sum)
-}
+};
 
-function divide(num1, num2){
-    sum = num1 / num2;
-    console.log(sum)
-}
+function multiply(){
 
-function clearInput(){
-    input.textContent = ""
-    inputValue = ""
-}
+};
+
+function divide(){
+
+};
+
+function clearScreen(instruction){
+    if (instruction == "all"){
+        input.textContent = "0"
+        userInput = "0"
+        output.textContent = ""
+        outputValue = ""
+        operator.textContent = ""
+        storedInput = ""
+        storedInputText.textContent = ""
+    }
+    if (instruction == "input"){
+        input.textContent = "0"
+        userInput = "0"
+    }
+};
 
 
