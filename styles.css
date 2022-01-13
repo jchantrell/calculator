@@ -6,7 +6,7 @@ html, body {
     font-size: 36px;
 }
  
-.button, .button-row, .input, .input-row, .output, .output-row, .calculator, .container, .clear {
+.button, .button-row, .calculator, .container, .clear, .backspace {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,16 +37,25 @@ html, body {
     width: 100%;
 }
 
-.input, .output {
-    background: grey;
+.output-row {
+    background: darkgrey;;
+    gap: 2px;
+    height: 10%;
     width: 100%;
-    height: 100%;
-    justify-content: flex-end;
-    margin-right: 20px;
 }
 
-.clear {
-    margin-left: 10px;
+.input-row, .output-row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.input, .output, .stored-input, .operator {
+    background: grey;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.clear, .backspace {
 }
 
 .button {
