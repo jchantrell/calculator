@@ -1,65 +1,52 @@
-html, body {
-    background: lightcoral;
-    height: 100vh;
-    margin: 20%;
-    color: white;
-    font-size: 36px;
-}
- 
-.button, .button-row, .calculator, .container, .clear, .backspace {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to top right, #000000 0%, #666699 100%);
+    font-family: Roboto;
+    font-size: 20px;
+    user-select: none;
 }
 
-.container {
-    flex-direction: column;
+button {
+    background: #2b323d;
+    color: black;
+    font-size: 20px;
 }
 
 .calculator {
-    background: white;
-    height: 600px;
-    width: 400px;
-    flex-direction: column;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(120px, auto) repeat(5, 80px);
+    min-height: 100vh;
+  }
+
+.button-span {
+    grid-column: span 2;
 }
 
-.button-row {
-    background: grey;
-    gap: 2px;
-    height: 20%;
-    width: 100%;
-}
-
-.input-row {
-    background: grey;
-    gap: 2px;
-    height: 10%;
-    width: 100%;
-}
-
-.output-row {
-    background: darkgrey;;
-    gap: 2px;
-    height: 10%;
-    width: 100%;
-}
-
-.input-row, .output-row {
+.screen {
+    grid-column: 1 / -1;
+    background-color: #161f2e;
     display: flex;
-    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+[data-num], [data-decimal] {
+    background: #3c485c;
 }
 
-.input, .output, .stored-input, .operator {
-    background: grey;
-    height: 100%;
-    justify-content: flex-end;
-}
-
-.clear, .backspace {
-}
-
-.button {
-    background: black;
-    height: 95%;
-    width: 24%;
+.screen, button {
+    border-color: #161f2e;
+    border-width: 1px;
+    border-style: solid;
+    color: white;
 }
