@@ -46,16 +46,19 @@ function inputDecimal(){
 
 function inputOperator(operator){
     currentOperation = operator; 
+    
     // if there is no input, do nothing
     if (inputField.textContent == '0'){
         previousOperation = operator;
+        outputField.textContent = `${storedOutput} ${currentOperation}`
+        return;
     }
     // setup for start of program - initial operation is measured against null so have ignore 
     if (previousOperation == null ){
         previousOperation = currentOperation;
     }
     // if input operator is not equal to previous one, do the previous calculation
-    if (operator != previousOperation ){
+    if (operator != previousOperation){
         operate(previousOperation)
         previousOperation = operator;
     }
@@ -97,7 +100,15 @@ function operate(operator){
  }
 
  function equals(){
-     if (storedOutput != ''){
+     if (inputField.textContent == '0'){
+         return;
+     }
+     if (currentOperation == null){
+         storedOutput = inputField.textContent;
+         outputField.textContent = `${storedOutput} = ${inputField.textContent}`
+         clearDisplay();
+     }
+     else if (storedOutput != ''){
          a = parseInt(storedOutput);
          b = parseInt(inputField.textContent)
          operator = previousOperation;
@@ -140,7 +151,7 @@ function add(a, b){
 }
 
 function subtract(a, b){
-    storedOutput = a - b;
+      storedOutput = a - b;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} - ${b} = ${storedOutput}`)
 }
@@ -202,4 +213,68 @@ function updateCalculations(content) {
 // keep calculation list element scrolled to bottom to show most recent calculations
 function updateScroll(){
     calculations.scrollTop = calculations.scrollHeight;
+    inputField.scrollTop = calculations.scrollHeight;
+    outputField.scrollTop = calculations.scrollHeight;
 }
+
+// setup keyboard listener - condense function later
+document.addEventListener('keydown', function (e) {
+    if (e.key === '1') {
+        inputNumber('1')
+        updateScroll(); 
+    }
+    if (e.key === '2') {
+        inputNumber('2')
+    }
+    if (e.key === '3') {
+        inputNumber('3')
+    }
+    if (e.key === '4') {
+        inputNumber('4')
+    }
+    if (e.key === '5') {
+    inputNumber('5')
+    }
+    if (e.key === '6') {
+    inputNumber('6')
+    }
+    if (e.key === '7') {
+    inputNumber('7')
+    }
+    if (e.key === '8') {
+    inputNumber('8')
+    }
+    if (e.key === '9') {
+    inputNumber('9')
+    }
+    if (e.key === '0') {
+    inputNumber('0')
+    }
+    if (e.key === '.') {
+    inputDecimal()
+    }
+    if (e.key === '=' || e.key === 'Enter') {
+    equals()
+    }
+    if (e.key === 'c' || e.key === 'Escape' || e.key === 'C') {
+    clearData()
+    }
+    if (e.key === 'Backspace') {
+    backspace()
+    }
+    if (e.key === '%') {
+    inputOperator('%')
+    }    
+    if (e.key === '+') {
+    inputOperator('+')
+    }
+    if (e.key === '-') {
+    inputOperator('-')
+    } 
+    if (e.key === '*') {
+    inputOperator('×')
+    } 
+    if (e.key === '/') {
+    inputOperator('÷')
+    }
+});
