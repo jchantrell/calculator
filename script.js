@@ -6,10 +6,12 @@ const backspaceKey = document.querySelector('.backspace');
 const clearKey = document.querySelector('[data-clear]');
 const inputField = document.querySelector('.input');
 const outputField = document.querySelector('.output');
-
+const calculations = document.querySelector('.calculations');
+const previousCalculations = [];
 let userInput = '';
-let storedInput = '';
-let output = '';
+let storedOutput = ''
+let currentOperation = null;
+let previousOperation = null;
 
 // set up listener on each number key, input value of key on press
 numberKey.forEach((key) => key.addEventListener('click', () => inputNumber(key.textContent)))
@@ -23,6 +25,7 @@ equalsKey.addEventListener('click', equals)
 backspaceKey.addEventListener('click', backspace)
 clearKey.addEventListener('click', clearData)
 
+// when num key pressed, append value to end of input string
 function inputNumber(input){
     if (inputField.textContent == '0'){
         inputField.textContent = ''
@@ -30,11 +33,7 @@ function inputNumber(input){
     inputField.textContent += input;
 }
 
-function inputOperator(operator){
-
-
-}
-
+// when decimal key pressed, check if decimal present, if not then append to end of input string
 function inputDecimal(){
     if (inputField.textContent == ''){
         inputField.textContent = '0'
@@ -45,50 +44,142 @@ function inputDecimal(){
     else inputField.textContent += '.'
 }
 
+function inputOperator(operator){
+    currentOperation = operator; 
+    // if there is no input, do nothing
+    if (inputField.textContent == '0'){
+        previousOperation = operator;
+    }
+    // setup for start of program - initial operation is measured against null so have ignore 
+    if (previousOperation == null ){
+        previousOperation = currentOperation;
+    }
+    // if input operator is not equal to previous one, do the previous calculation
+    if (operator != previousOperation ){
+        operate(previousOperation)
+        previousOperation = operator;
+    }
+    else 
+        operate(operator)
+        previousOperation = operator;
+}
+
 function operate(operator){
-    if (inputField.textContent != "0"){
+    // if output stored of previous calculation, use that for calculation
+    if (storedOutput != ""){
+        a = storedOutput;
+        b = inputField.textContent;
+        compute(operator, a, b);
+    }
+    // if there is no previous calculation, use stored number + current input for calculation
+    else if (outputField.textContent != "" && previousOperation != null){
+        a = userInput;
+        b = inputField.textContent;
+        compute(operator, a, b);
+    }
+    updateDisplay(operator);
+ }  
+ 
+ function updateDisplay(operator){
+    if (operator == null){
+        outputField.textContent = `${userInput} ${currentOperation}`
+    }
+    if (storedOutput == ''){
         userInput = inputField.textContent;
-        outputField.textContent = userInput;
+        outputField.textContent = `${userInput} ${currentOperation}`
+        clearDisplay();
+        }
+    else if (storedOutput != ''){
+        userInput = inputField.textContent;
+        outputField.textContent = `${storedOutput} ${currentOperation}`
+        clearDisplay();
+    }
+ }
+
+ function equals(){
+     if (storedOutput != ''){
+         a = parseInt(storedOutput);
+         b = parseInt(inputField.textContent)
+         operator = previousOperation;
+         compute(previousOperation, a, b)
+         clearDisplay();
+     }
+     else if (storedOutput == ''){
+        a = parseInt(userInput);
+        b = parseInt(inputField.textContent)
+        operator = currentOperation;
+        compute(currentOperation, a, b)
+        clearDisplay();
+    }
+ }
+
+function compute(operator, a, b){
+    a = parseInt(a);
+    b = parseInt(b);
+    if (operator == '+'){
+        add(a, b)
+    }
+    else if (operator == '-'){
+        subtract(a, b)
+    }
+    else if (operator == '×'){
+        multiply(a, b)
+    }
+    else if (operator == '÷'){
+        divide(a, b)
+    }
+    else if (operator == '%'){
+        percent(a, b)
     }
 }
 
 function add(a, b){
-    return a + b;
+    storedOutput = a + b;
+    outputField.textContent = `${storedOutput}`;
+    updateCalculations(`${a} + ${b} = ${storedOutput}`)
 }
 
 function subtract(a, b){
-    return a - b;
+    storedOutput = a - b;
+    outputField.textContent = `${storedOutput}`;
+    updateCalculations(`${a} - ${b} = ${storedOutput}`)
 }
 
 function multiply(a, b){
-    return a * b;
+    storedOutput = a * b;
+    outputField.textContent = `${storedOutput}`;
+    updateCalculations(`${a} × ${b} = ${storedOutput}`)
 }
 
 function divide(a, b){
-    return a / b;
+    if (a == '0' || b == '0' || a == '0' && b == '0'){
+        console.log("Divide by zero.")
+        return;
+    }
+    else 
+        storedOutput = a / b;
+        outputField.textContent = `${storedOutput}`;
+        updateCalculations(`${a} ÷ ${b} = ${storedOutput}`)
 }
 
-function percentage(a, b){
+function percent(a, b){
     if (a == '0' && b == '0'){
         outputField.textContent = "Not possible."
     }
-    sum = (100 * a) / b;
-    return sum;
+    storedOutput = (100 * a) / b;
+    outputField.textContent = `${storedOutput}`;
+    updateCalculations(`${a} % ${b} = ${storedOutput}`)
 }
 
-function equals(a, b){
-
-}
-
-function clearScreen(){
-
+function clearDisplay(){
+    inputField.textContent = '0'
 }
 
 function clearData() {
     inputField.textContent = '0';
     outputField.textContent = '';
     userInput = '';
-    storedInput = '';
+    storedOutput = '';
     output = '';
 }
 
@@ -97,4 +188,18 @@ function backspace() {
     if (inputField.textContent == ''){
         inputField.textContent = '0'
     }
+}
+
+// push calculation to list and add to a list on page
+function updateCalculations(content) {
+    previousCalculations.push(content)
+    let li = document.createElement('li');
+    li.innerText = content;
+    calculations.appendChild(li);
+    updateScroll(); 
+}
+
+// keep calculation list element scrolled to bottom to show most recent calculations
+function updateScroll(){
+    calculations.scrollTop = calculations.scrollHeight;
 }
