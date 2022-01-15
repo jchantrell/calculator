@@ -17,6 +17,8 @@ button {
 
 li {
     list-style-type: none;
+
+    line-height: 1.4;
 }
 
 .calculator {
@@ -39,7 +41,7 @@ li {
     text-align: left;
     padding-bottom: 10px;
     z-index: 1;
-    max-height: 70px;
+    max-height: 90px;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -65,6 +67,10 @@ li {
 
 [data-num], [data-decimal] {
     background: #3c485c;
+}
+
+[data-op]{
+    font-size: 26px;
 }
 
 .screen, button {
