@@ -1,3 +1,4 @@
+const allKeys = document.querySelectorAll('.button')
 const numberKey = document.querySelectorAll('[data-num]');
 const operatorKey = document.querySelectorAll('[data-op]');
 const decimalKey = document.querySelector('[data-decimal]');
@@ -161,10 +162,9 @@ function multiply(a, b){
 
 function divide(a, b){
     if (a == '0' || b == '0' || a == '0' && b == '0'){
-        updateCalculations(`Cannot divide by zero!`);
+        updateCalculations(`Cannot divide by zero.`);
         storedOutput = userInput;
         outputField.textContent = `${storedOutput}`;
-
         return;
     }
     else 
@@ -175,8 +175,11 @@ function divide(a, b){
 }
 
 function percent(a, b){
-    if (a == '0' && b == '0'){
-        outputField.textContent = "Not possible."
+    if (a == '0' || b == '0' || a == '0' && b == '0'){
+        updateCalculations(`Cannot get a percentage of zero.`);
+        storedOutput = userInput;
+        outputField.textContent = `${storedOutput}`;
+        return;
     }
     storedOutput = (100 * a) / b;
     outputField.textContent = `${storedOutput}`;
@@ -239,64 +242,142 @@ function updateScroll(){
     outputField.scrollTop = calculations.scrollHeight;
 }
 
-// setup keyboard listener - condense function later
-document.addEventListener('keydown', function (e) {
+// setup keyboard listener - ugly function, will condense later
+document.addEventListener('keydown', e => {
     if (e.key === '1') {
         inputNumber('1')
-        updateScroll(); 
+        document.querySelector('.one').classList.add('pressed');
     }
     if (e.key === '2') {
         inputNumber('2')
+        document.querySelector('.two').classList.add('pressed');
     }
     if (e.key === '3') {
         inputNumber('3')
-    }
+        document.querySelector('.three').classList.add('pressed');
+    }1
     if (e.key === '4') {
         inputNumber('4')
+        document.querySelector('.four').classList.add('pressed');
     }
     if (e.key === '5') {
-    inputNumber('5')
+        inputNumber('5')
+        document.querySelector('.five').classList.add('pressed');
     }
     if (e.key === '6') {
-    inputNumber('6')
+        inputNumber('6')
+        document.querySelector('.six').classList.add('pressed');
     }
     if (e.key === '7') {
-    inputNumber('7')
+        inputNumber('7')
+        document.querySelector('.seven').classList.add('pressed');
     }
     if (e.key === '8') {
-    inputNumber('8')
+        inputNumber('8')
+        document.querySelector('.eight').classList.add('pressed');
     }
     if (e.key === '9') {
-    inputNumber('9')
+        inputNumber('9')
+        document.querySelector('.nine').classList.add('pressed');
     }
     if (e.key === '0') {
-    inputNumber('0')
+        inputNumber('0')
+        document.querySelector('.zero').classList.add('pressed');
     }
     if (e.key === '.') {
-    inputDecimal()
+        inputDecimal()
+        document.querySelector('.decimal').classList.add('pressed');
     }
     if (e.key === '=' || e.key === 'Enter') {
-    equals()
+        equals()
+        document.querySelector('.equals').classList.add('pressed');
     }
     if (e.key === 'c' || e.key === 'Escape' || e.key === 'C') {
-    clearData()
+        clearData()
+        document.querySelector('.clear').classList.add('pressed');
     }
     if (e.key === 'Backspace') {
-    backspace()
+        backspace()
+        document.querySelector('.backspace').classList.add('pressed');
     }
     if (e.key === '%') {
-    inputOperator('%')
+        inputOperator('%')
+        document.querySelector('.percent').classList.add('pressed');
     }    
     if (e.key === '+') {
-    inputOperator('+')
+        inputOperator('+')
+        document.querySelector('.plus').classList.add('pressed');
     }
     if (e.key === '-') {
-    inputOperator('-')
+        inputOperator('-')
+        document.querySelector('.minus').classList.add('pressed');
     } 
     if (e.key === '*') {
-    inputOperator('×')
+        inputOperator('×')
+        document.querySelector('.multiply').classList.add('pressed');
     } 
     if (e.key === '/') {
-    inputOperator('÷')
+        inputOperator('÷')
+        document.querySelector('.divide').classList.add('pressed');
+    }
+});
+
+document.addEventListener('keyup', e => {
+    if (e.key === '1') {
+        document.querySelector('.one').classList.remove('pressed');
+    }
+    if (e.key === '2') {
+        document.querySelector('.two').classList.remove('pressed');
+    }
+    if (e.key === '3') {
+        document.querySelector('.three').classList.remove('pressed');
+    }1
+    if (e.key === '4') {
+        document.querySelector('.four').classList.remove('pressed');
+    }
+    if (e.key === '5') {
+        document.querySelector('.five').classList.remove('pressed');
+    }
+    if (e.key === '6') {
+        document.querySelector('.six').classList.remove('pressed');
+    }
+    if (e.key === '7') {
+        document.querySelector('.seven').classList.remove('pressed');
+    }
+    if (e.key === '8') {
+        document.querySelector('.eight').classList.remove('pressed');
+    }
+    if (e.key === '9') {
+        document.querySelector('.nine').classList.remove('pressed');
+    }
+    if (e.key === '0') {
+        document.querySelector('.zero').classList.remove('pressed');
+    }
+    if (e.key === '.') {
+        document.querySelector('.decimal').classList.remove('pressed');
+    }
+    if (e.key === '=' || e.key === 'Enter') {
+        document.querySelector('.equals').classList.remove('pressed');
+    }
+    if (e.key === 'c' || e.key === 'Escape' || e.key === 'C') {
+        document.querySelector('.clear').classList.remove('pressed');
+    }
+    if (e.key === 'Backspace') {
+        document.querySelector('.backspace').classList.remove('pressed');
+    }
+    if (e.key === '%') {
+        document.querySelector('.percent').classList.remove('pressed');
+    }    
+    if (e.key === '+') {
+        document.querySelector('.plus').classList.remove('pressed');
+    }
+    if (e.key === '-') {
+        document.querySelector('.minus').classList.remove('pressed');
+    } 
+    if (e.key === '*') {
+        document.querySelector('.multiply').classList.remove('pressed');
+    } 
+    if (e.key === '/') {
+        document.querySelector('.divide').classList.remove('pressed');
     }
 });
