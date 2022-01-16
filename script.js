@@ -46,7 +46,9 @@ function inputDecimal(){
 
 function inputOperator(operator){
     currentOperation = operator; 
-    
+    if (inputField.textContent == '0' && storedOutput == ''){
+        return;
+    }
     // if there is no input, do nothing
     if (inputField.textContent == '0'){
         previousOperation = operator;
@@ -56,11 +58,7 @@ function inputOperator(operator){
     // setup for start of program - initial operation is measured against null so have ignore 
     if (previousOperation == null ){
         previousOperation = currentOperation;
-    }
-    // if input operator is not equal to previous one, do the previous calculation
-    if (operator != previousOperation){
         operate(previousOperation)
-        previousOperation = operator;
     }
     else 
         operate(operator)
@@ -82,51 +80,46 @@ function operate(operator){
     }
     updateDisplay(operator);
  }  
- 
- function updateDisplay(operator){
-    if (operator == null){
-        outputField.textContent = `${userInput} ${currentOperation}`
-    }
-    if (storedOutput == ''){
-        userInput = inputField.textContent;
-        outputField.textContent = `${userInput} ${currentOperation}`
-        clearDisplay();
-        }
-    else if (storedOutput != ''){
-        userInput = inputField.textContent;
-        outputField.textContent = `${storedOutput} ${currentOperation}`
-        clearDisplay();
-    }
- }
 
  function equals(){
-     if (inputField.textContent == '0'){
-         return;
+     if (userInput == ''){
+         return
      }
-     if (currentOperation == null){
+     if (inputField.textContent == '0' && currentOperation == null){
+        return;
+     }
+     else if (currentOperation == null){
          storedOutput = inputField.textContent;
          outputField.textContent = `${storedOutput} = ${inputField.textContent}`
+         updateCalculations(`${inputField.textContent} = ${storedOutput}`)
          clearDisplay();
      }
      else if (storedOutput != ''){
-         a = parseInt(storedOutput);
-         b = parseInt(inputField.textContent)
-         operator = previousOperation;
-         compute(previousOperation, a, b)
+         a = parseFloat(storedOutput);
+         b = parseFloat(inputField.textContent)
+         compute(currentOperation, a, b)
          clearDisplay();
+         currentOperation = null;
      }
-     else if (storedOutput == ''){
-        a = parseInt(userInput);
-        b = parseInt(inputField.textContent)
-        operator = currentOperation;
+     else if (storedOutput == '' && userInput != ''){
+        a = parseFloat(userInput);
+        b = parseFloat(inputField.textContent)
         compute(currentOperation, a, b)
         clearDisplay();
+        currentOperation = null;
+    }
+     else if (storedOutput == ''){
+        a = parseFloat(userInput);
+        b = parseFloat(inputField.textContent)
+        compute(currentOperation, a, b)
+        clearDisplay();
+        currentOperation = null;
     }
  }
 
 function compute(operator, a, b){
-    a = parseInt(a);
-    b = parseInt(b);
+    a = parseFloat(a);
+    b = parseFloat(b);
     if (operator == '+'){
         add(a, b)
     }
@@ -148,29 +141,37 @@ function add(a, b){
     storedOutput = a + b;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} + ${b} = ${storedOutput}`)
+    cleanUp();
 }
 
 function subtract(a, b){
-      storedOutput = a - b;
+    storedOutput = a - b;
     outputField.textContent = `${storedOutput}`;
-    updateCalculations(`${a} - ${b} = ${storedOutput}`)
+    updateCalculations(`${a} - ${b} = ${storedOutput}`);
+    cleanUp();
+    
 }
 
 function multiply(a, b){
     storedOutput = a * b;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} × ${b} = ${storedOutput}`)
+    cleanUp();
 }
 
 function divide(a, b){
     if (a == '0' || b == '0' || a == '0' && b == '0'){
-        console.log("Divide by zero.")
+        updateCalculations(`Cannot divide by zero!`);
+        storedOutput = userInput;
+        outputField.textContent = `${storedOutput}`;
+
         return;
     }
     else 
         storedOutput = a / b;
         outputField.textContent = `${storedOutput}`;
         updateCalculations(`${a} ÷ ${b} = ${storedOutput}`)
+        cleanUp();
 }
 
 function percent(a, b){
@@ -180,6 +181,27 @@ function percent(a, b){
     storedOutput = (100 * a) / b;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} % ${b} = ${storedOutput}`)
+}
+
+function updateDisplay(operator){
+    if (operator == null){
+        outputField.textContent = `${userInput} ${currentOperation}`
+    }
+    if (storedOutput == ''){
+        userInput = inputField.textContent;
+        outputField.textContent = `${userInput} ${currentOperation}`
+        clearDisplay();
+        }
+    else if (storedOutput != ''){
+        userInput = inputField.textContent;
+        outputField.textContent = `${storedOutput} ${currentOperation}`
+        clearDisplay();
+    }
+ }
+
+function cleanUp(){
+    previousOperation = currentOperation;
+    curruntOperation = null;
 }
 
 function clearDisplay(){
