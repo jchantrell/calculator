@@ -17,7 +17,6 @@ button {
 
 li {
     list-style-type: none;
-
     line-height: 1.4;
 }
 
@@ -64,6 +63,25 @@ li {
     word-wrap: break-word;
     word-break: break-all;
   }
+
+.input, .output{
+    z-index: 1;
+    max-height: 20px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: text;
+}
+
+.input:hover {
+    overflow-y: scroll;
+}
+
+.output:hover {
+    overflow-y: scroll;
+}
 
 [data-num], [data-decimal] {
     background: #3c485c;
