@@ -139,14 +139,14 @@ function compute(operator, a, b){
 }
 
 function add(a, b){
-    storedOutput = a + b;
+    storedOutput = Math.round(a + b * 100) / 100;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} + ${b} = ${storedOutput}`)
     cleanUp();
 }
 
 function subtract(a, b){
-    storedOutput = a - b;
+    storedOutput = Math.round(a - b * 100) / 100;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} - ${b} = ${storedOutput}`);
     cleanUp();
@@ -154,7 +154,7 @@ function subtract(a, b){
 }
 
 function multiply(a, b){
-    storedOutput = a * b;
+    storedOutput = Math.round(a * b * 100) / 100;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} × ${b} = ${storedOutput}`)
     cleanUp();
@@ -168,7 +168,7 @@ function divide(a, b){
         return;
     }
     else 
-        storedOutput = a / b;
+        storedOutput = Math.round(a / b * 100) / 100;
         outputField.textContent = `${storedOutput}`;
         updateCalculations(`${a} ÷ ${b} = ${storedOutput}`)
         cleanUp();
@@ -181,7 +181,7 @@ function percent(a, b){
         outputField.textContent = `${storedOutput}`;
         return;
     }
-    storedOutput = (100 * a) / b;
+    storedOutput = Math.round((100 * a) / b * 100) / 100;
     outputField.textContent = `${storedOutput}`;
     updateCalculations(`${a} % ${b} = ${storedOutput}`)
 }

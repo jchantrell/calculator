@@ -1,4 +1,4 @@
 To do:
 
-* Make it more interactive via CSS (button highlighting, etc)
-* Add rounding to output
+* Fix rounding up on answers
+* Format a + b in calculations to be significantly shorter
