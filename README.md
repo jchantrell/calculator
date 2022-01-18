@@ -4,4 +4,4 @@ There is a known limitation where you cannot input negative numbers at the momen
 
 Other than that, there are still a few minor bugs present and a bit of visual clean up that needs to happen. 
 
-Live: https://jchantrell.github.io/calculator/
+Live preview: https://jchantrell.github.io/calculator/
